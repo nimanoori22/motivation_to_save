@@ -25,10 +25,23 @@ class Digikala:
         lis = [re.sub(' +', ' ', li.text.strip().replace('\n', '')) for li in ul_soup]
         return lis
 
+    def price_to_int(self):
+        eng_num = ''
+        price = self.get_price()
+        nums = {
+            '۱': 1, '۲': 2, '۳': 3,
+            '۴': 4, '۵': 5, '۶': 6, '۷': 7, '۸': 8,
+            '۹': 9, '۰': 0 
+        }
+        for i in price:
+            if i in nums.keys():
+                eng_num += str(nums[i])
+        return int(eng_num)
+
 
 if __name__ == '__main__':
 
     link = 'https://www.digikala.com/product/dkp-3735138/%D9%84%D9%BE-%D8%AA%D8%A7%D9%BE-13-%D8%A7%DB%8C%D9%86%DA%86%DB%8C-%D8%A7%D9%BE%D9%84-%D9%85%D8%AF%D9%84-macbook-air-mgn63-2020'
     dg = Digikala(link)
 
-    print(dg.get_features())
+    print(dg.price_to_int())
