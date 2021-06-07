@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as bs
 import re
+import io
 
 class Digikala:
     def __init__(self, link):
@@ -20,7 +21,7 @@ class Digikala:
     def get_titles(self):
         soup = bs(self.page.content, 'html.parser')
         titles = (soup.select_one('.c-product__title-en').text,
-        soup.select_one('.c-product__title').text)
+        self.trim_persian_text(soup.select_one('.c-product__title').text))
         return titles
 
     def get_features(self):
@@ -28,7 +29,7 @@ class Digikala:
         features = soup.select_one('.js-is-expandable ul')
         ul_soup = bs(str(features), 'html.parser').findAll('li')
         #strips white space inside and outside of string
-        lis = [re.sub(' +', ' ', li.text.strip().replace('\n', '')) for li in ul_soup]
+        lis = [self.trim_persian_text(li.text) for li in ul_soup]
         return lis
 
     def price_to_int(self):
@@ -44,6 +45,9 @@ class Digikala:
                 eng_num += str(nums[i])
         return int(eng_num)
 
+    def trim_persian_text(self, text):
+        return re.sub(' +', ' ', text.strip().replace('\n', ''))
+
 
 if __name__ == '__main__':
 
@@ -51,4 +55,6 @@ if __name__ == '__main__':
     link1 = 'https://www.digikala.com/product/dkp-2314622/%D9%87%D8%A7%D8%A8-3-%D9%BE%D9%88%D8%B1%D8%AA-usb-c-%D9%88%DB%8C%D9%88%D9%88-%D9%85%D8%AF%D9%84-c2h'
     dg = Digikala(link)
 
-    print(dg.get_titles())
+    print(dg.get_features())
+
+

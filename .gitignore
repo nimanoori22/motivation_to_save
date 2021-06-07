@@ -130,3 +130,7 @@ dmypy.json
 
 #ide files
 .vscode/
+
+#test
+test_main.py
+Output.txt
