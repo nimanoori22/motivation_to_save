@@ -17,6 +17,12 @@ class Digikala:
         price = soup.select_one('.js-price-value')
         return price.text.strip()
     
+    def get_titles(self):
+        soup = bs(self.page.content, 'html.parser')
+        titles = (soup.select_one('.c-product__title-en').text,
+        soup.select_one('.c-product__title').text)
+        return titles
+
     def get_features(self):
         soup = bs(self.page.content, 'html.parser')
         features = soup.select_one('.js-is-expandable ul')
@@ -42,6 +48,7 @@ class Digikala:
 if __name__ == '__main__':
 
     link = 'https://www.digikala.com/product/dkp-3735138/%D9%84%D9%BE-%D8%AA%D8%A7%D9%BE-13-%D8%A7%DB%8C%D9%86%DA%86%DB%8C-%D8%A7%D9%BE%D9%84-%D9%85%D8%AF%D9%84-macbook-air-mgn63-2020'
+    link1 = 'https://www.digikala.com/product/dkp-2314622/%D9%87%D8%A7%D8%A8-3-%D9%BE%D9%88%D8%B1%D8%AA-usb-c-%D9%88%DB%8C%D9%88%D9%88-%D9%85%D8%AF%D9%84-c2h'
     dg = Digikala(link)
 
-    print(dg.price_to_int())
+    print(dg.get_titles())
