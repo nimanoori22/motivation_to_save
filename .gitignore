@@ -134,3 +134,6 @@ dmypy.json
 #test
 test_main.py
 Output.txt
+
+#secrets
+secrets.py
