@@ -18,11 +18,9 @@ class Digikala:
         price = soup.select_one('.js-price-value')
         return price.text.strip()
     
-    def get_titles(self):
+    def get_title(self):
         soup = bs(self.page.content, 'html.parser')
-        titles = (soup.select_one('.c-product__title-en').text,
-        self.trim_persian_text(soup.select_one('.c-product__title').text))
-        return titles
+        return self.trim_persian_text(soup.select_one('.c-product__title').text)
 
     def get_features(self):
         soup = bs(self.page.content, 'html.parser')
